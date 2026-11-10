@@ -1,0 +1,45 @@
+Andrej Karpathy:
+
+“A 1B model can be much more effective than most current LLMs.
+
+90% of current models waste a ton of capacity and money on remembering stuff that doesn’t matter.”
+
+here is his 5 core thesis about Small LLM’s:
+
+1. the intelligence was never the knowledge. Strip the memorized internet, keep the reasoning. What’s left is the cognitive core, and it’s small.
+
+2. the core might fit in ~1B params. Maybe less. “Plenty of room at the bottom.” We’ve been paying for a library when we needed a brain.
+
+3. size stopped being the bottleneck. What makes an agent work is the tools it can call and how tight the feedback loop is, not parameter count.
+
+4. intelligence lives in the system, not the weights. A raw LLM is a CPU with no OS. Small core + good harness > giant model alone.
+
+5. you can own it. A model on your hardware is one no one can rate-limit, price-hike, or deprecate on you.
+
+in 12 months the gap between teams shipping on-device and teams paying per-token frontier bills won’t be capability.
+
+TwIL an 8.8B model at 90%+ of frontier isn’t a benchmark flex.
+
+It’s the thesis Karpathy’s been repeating all year, made real.
+
+
+
+Video URL
+https://youtu.be/6P2ItWQY_uw?si=tc_ETCizKlgp_gyJ
+
+Andrej Karpathy – Bigger Models Aren’t the Answer
+Anthony Batt
+·
+Jul 21, 2026
+Watch on YouTube
+Andrej Karpathy makes the case that small models, the right tools, and tight feedback loops matter more than raw scale.
+
+For years, the assumption in AI has been simple: bigger model, better agent. More parameters, more compute, more scale.
+
+Andrej Karpathy just made the opposite case.
+
+In a 16-minute breakdown, he argues that raw size isn’t the real bottleneck anymore. What actually determines whether an agent works well is the tools it has access to, and how tight the feedback loop is between taking an action and correcting it.
+
+A small model with the right tools and a fast feedback loop can outperform a much larger model working in isolation. The intelligence isn’t just sitting in the weights — it’s in the system built around the model: what it can call, what it can check, and how quickly it can learn from being wrong.
+
+It’s a reframe worth sitting with, especially for anyone building agents right now. The instinct to scale up may be solving the wrong problem.

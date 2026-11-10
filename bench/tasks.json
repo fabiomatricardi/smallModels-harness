@@ -1,0 +1,232 @@
+{
+  "meta": {
+    "name": "micro-AgentFloor",
+    "version": "1.0",
+    "description": "6-tier deterministic agent benchmark, 30 tasks. Derived from the AgentFloor design (arXiv 2605.00334) for local single-model runs.",
+    "reps_default": 2
+  },
+  "tasks": [
+    {
+      "id": "A0-1", "tier": "A0", "max_steps": 2,
+      "prompt": "Project notes: Atlas is active. Borealis is paused. Cinder is active. Delta is archived. Ember is active. Fjord is paused.\n\nHow many projects are active? Reply with only the number.",
+      "answer": "3", "gold": null, "required_tools": []
+    },
+    {
+      "id": "A0-2", "tier": "A0", "max_steps": 2,
+      "prompt": "Project notes: Atlas is active. Borealis is paused. Cinder is active. Delta is archived. Ember is active. Fjord is paused.\n\nList the names of the paused projects in alphabetical order, comma-separated, no spaces. Reply with only that list.",
+      "answer": "Borealis,Fjord", "gold": null, "required_tools": []
+    },
+    {
+      "id": "A0-3", "tier": "A0", "max_steps": 2,
+      "prompt": "Costs: Atlas 45, Borealis 80, Cinder 30.\n\nWhat is the total cost? Reply with only the number.",
+      "answer": "155", "gold": null, "required_tools": []
+    },
+    {
+      "id": "A0-4", "tier": "A0", "max_steps": 2,
+      "prompt": "Budgets: Atlas 120, Borealis 200, Cinder 90, Delta 150.\n\nWhich project has the highest budget? Reply with only its name.",
+      "answer": "Borealis", "gold": null, "required_tools": []
+    },
+    {
+      "id": "A0-5", "tier": "A0", "max_steps": 2,
+      "prompt": "Reply with exactly this format and nothing else: OK-<sum of 7 and 8>  (replace <sum of 7 and 8> with the actual sum).",
+      "answer": "OK-15", "gold": null, "required_tools": []
+    },
+
+    {
+      "id": "A-1", "tier": "A", "max_steps": 4,
+      "prompt": "Find the record named Ember. Submit its team using submit_decision with exactly: {\"record_id\": \"<id>\", \"team\": \"<team>\"}",
+      "gold": {"record_id": "r5", "team": "data"},
+      "required_tools": ["search_records", "submit_decision"],
+      "validator": {"required": ["record_id", "team"], "record_key": "record_id"}
+    },
+    {
+      "id": "A-2", "tier": "A", "max_steps": 4,
+      "prompt": "Find the record named Fjord. Submit its budget using submit_decision with exactly: {\"record_id\": \"<id>\", \"budget\": <budget>}",
+      "gold": {"record_id": "r6", "budget": 300},
+      "required_tools": ["search_records", "submit_decision"],
+      "validator": {"required": ["record_id", "budget"], "record_key": "record_id"}
+    },
+    {
+      "id": "A-3", "tier": "A", "max_steps": 4,
+      "prompt": "Find the record named Iris. Submit its status using submit_decision with exactly: {\"record_id\": \"<id>\", \"status\": \"<status>\"}",
+      "gold": {"record_id": "r9", "status": "paused"},
+      "required_tools": ["search_records", "submit_decision"],
+      "validator": {"required": ["record_id", "status"], "record_key": "record_id"}
+    },
+    {
+      "id": "A-4", "tier": "A", "max_steps": 4,
+      "prompt": "Find the record named Lumen. Submit its cost using submit_decision with exactly: {\"record_id\": \"<id>\", \"cost\": <cost>}",
+      "gold": {"record_id": "r12", "cost": 15},
+      "required_tools": ["search_records", "submit_decision"],
+      "validator": {"required": ["record_id", "cost"], "record_key": "record_id"}
+    },
+    {
+      "id": "A-5", "tier": "A", "max_steps": 4,
+      "prompt": "Find the record named Kestrel. Submit its level using submit_decision with exactly: {\"record_id\": \"<id>\", \"level\": <level>}",
+      "gold": {"record_id": "r11", "level": 4},
+      "required_tools": ["search_records", "submit_decision"],
+      "validator": {"required": ["record_id", "level"], "record_key": "record_id"}
+    },
+
+    {
+      "id": "B-1", "tier": "B", "max_steps": 6,
+      "prompt": "Search for the record named Ember, then look it up, then submit its team using submit_decision with exactly: {\"record_id\": \"<id>\", \"team\": \"<team>\"}",
+      "gold": {"record_id": "r5", "team": "data"},
+      "required_tools": ["search_records", "lookup_record", "submit_decision"],
+      "validator": {"required": ["record_id", "team"], "record_key": "record_id"}
+    },
+    {
+      "id": "B-2", "tier": "B", "max_steps": 6,
+      "prompt": "Search for the record named Harbor, then look it up, then submit its cost using submit_decision with exactly: {\"record_id\": \"<id>\", \"cost\": <cost>}",
+      "gold": {"record_id": "r8", "cost": 150},
+      "required_tools": ["search_records", "lookup_record", "submit_decision"],
+      "validator": {"required": ["record_id", "cost"], "record_key": "record_id"}
+    },
+    {
+      "id": "B-3", "tier": "B", "max_steps": 8,
+      "prompt": "Search for the record named Kestrel, look it up, then compute (budget - cost) and submit the result using submit_decision with exactly: {\"record_id\": \"<id>\", \"margin\": <number>}",
+      "gold": {"record_id": "r11", "margin": 25},
+      "required_tools": ["search_records", "lookup_record", "compute_value", "submit_decision"],
+      "validator": {"required": ["record_id", "margin"], "record_key": "record_id"}
+    },
+    {
+      "id": "B-4", "tier": "B", "max_steps": 6,
+      "prompt": "Search for the record named Lumen, then look it up, then submit its region using submit_decision with exactly: {\"record_id\": \"<id>\", \"region\": \"<region>\"}",
+      "gold": {"record_id": "r12", "region": "ap"},
+      "required_tools": ["search_records", "lookup_record", "submit_decision"],
+      "validator": {"required": ["record_id", "region"], "record_key": "record_id"}
+    },
+    {
+      "id": "B-5", "tier": "B", "max_steps": 6,
+      "prompt": "Search for the record named Cinder, then look it up, then submit its budget using submit_decision with exactly: {\"record_id\": \"<id>\", \"budget\": <budget>}",
+      "gold": {"record_id": "r3", "budget": 90},
+      "required_tools": ["search_records", "lookup_record", "submit_decision"],
+      "validator": {"required": ["record_id", "budget"], "record_key": "record_id"}
+    },
+
+    {
+      "id": "C-1", "tier": "C", "max_steps": 6,
+      "prompt": "Look up the record named Borealis. If its status is active, submit action keep; otherwise submit action review. Use submit_decision with exactly: {\"record_id\": \"<id>\", \"action\": \"keep\"} or {\"record_id\": \"<id>\", \"action\": \"review\"}",
+      "gold": {"record_id": "r2", "action": "keep"},
+      "required_tools": ["lookup_record", "submit_decision"],
+      "validator": {"required": ["record_id", "action"], "record_key": "record_id"}
+    },
+    {
+      "id": "C-2", "tier": "C", "max_steps": 6,
+      "prompt": "Look up the record named Cinder. If its cost is greater than 25, submit action escalate; otherwise submit action ignore. Use submit_decision with exactly: {\"record_id\": \"<id>\", \"action\": \"escalate\"} or {\"record_id\": \"<id>\", \"action\": \"ignore\"}",
+      "gold": {"record_id": "r3", "action": "escalate"},
+      "required_tools": ["lookup_record", "submit_decision"],
+      "validator": {"required": ["record_id", "action"], "record_key": "record_id"}
+    },
+    {
+      "id": "C-3", "tier": "C", "max_steps": 8,
+      "prompt": "Look up the record named Delta. Compute budget minus cost. If the result is less than 20, submit action at_risk; otherwise submit action healthy. Use submit_decision with exactly: {\"record_id\": \"<id>\", \"action\": \"at_risk\"} or {\"record_id\": \"<id>\", \"action\": \"healthy\"}",
+      "gold": {"record_id": "r4", "action": "at_risk"},
+      "required_tools": ["lookup_record", "compute_value", "submit_decision"],
+      "validator": {"required": ["record_id", "action"], "record_key": "record_id"}
+    },
+    {
+      "id": "C-4", "tier": "C", "max_steps": 6,
+      "prompt": "Look up the record named Ember. If its budget is greater than 70, submit action approve; otherwise submit action deny. Use submit_decision with exactly: {\"record_id\": \"<id>\", \"action\": \"approve\"} or {\"record_id\": \"<id>\", \"action\": \"deny\"}",
+      "gold": {"record_id": "r5", "action": "deny"},
+      "required_tools": ["lookup_record", "submit_decision"],
+      "validator": {"required": ["record_id", "action"], "record_key": "record_id"}
+    },
+    {
+      "id": "C-5", "tier": "C", "max_steps": 6,
+      "prompt": "Look up the record named Gale. If its status is archived, submit action closed; otherwise submit action open. Use submit_decision with exactly: {\"record_id\": \"<id>\", \"action\": \"closed\"} or {\"record_id\": \"<id>\", \"action\": \"open\"}",
+      "gold": {"record_id": "r7", "action": "closed"},
+      "required_tools": ["lookup_record", "submit_decision"],
+      "validator": {"required": ["record_id", "action"], "record_key": "record_id"}
+    },
+
+    {
+      "id": "D-1", "tier": "D", "max_steps": 8,
+      "prompt": "Two audits disagree about the same record: a1 and a2. Look up both. Use the audit with the later 'updated' date and submit its target and value using submit_decision with exactly: {\"record_id\": \"<target>\", \"status\": \"<value>\"}",
+      "gold": {"record_id": "r6", "status": "paused"},
+      "required_tools": ["lookup_record", "submit_decision"],
+      "validator": {"required": ["record_id", "status"], "record_key": "record_id"}
+    },
+    {
+      "id": "D-2", "tier": "D", "max_steps": 8,
+      "prompt": "Three audits a3, a4, a5 concern the same record and field. Look up all three. Use the majority value and submit the target and value using submit_decision with exactly: {\"record_id\": \"<target>\", \"region\": \"<value>\"}",
+      "gold": {"record_id": "r4", "region": "us"},
+      "required_tools": ["lookup_record", "submit_decision"],
+      "validator": {"required": ["record_id", "region"], "record_key": "record_id"}
+    },
+    {
+      "id": "D-3", "tier": "D", "max_steps": 8,
+      "prompt": "Record r7 and audit a6 disagree about r7's status. Look up both. Use the source with the later 'updated' date (a record with no updated field is older than any audit) and submit r7's status using submit_decision with exactly: {\"record_id\": \"r7\", \"status\": \"<status>\"}",
+      "gold": {"record_id": "r7", "status": "active"},
+      "required_tools": ["lookup_record", "submit_decision"],
+      "validator": {"required": ["record_id", "status"], "record_key": "record_id"}
+    },
+    {
+      "id": "D-4", "tier": "D", "max_steps": 8,
+      "prompt": "Compare records r5 and r9 on cost. Submit the id of the cheaper one and its cost using submit_decision with exactly: {\"record_id\": \"<id>\", \"cost\": <cost>}",
+      "gold": {"record_id": "r9", "cost": 20},
+      "required_tools": ["compare_records", "submit_decision"],
+      "validator": {"required": ["record_id", "cost"], "record_key": "record_id"}
+    },
+    {
+      "id": "D-5", "tier": "D", "max_steps": 10,
+      "prompt": "Among active records in team security, find the one with the smallest (budget - cost). Submit its id and that margin using submit_decision with exactly: {\"record_id\": \"<id>\", \"margin\": <number>}",
+      "gold": {"record_id": "r4", "margin": 10},
+      "required_tools": ["search_records", "compute_value", "submit_decision"],
+      "validator": {"required": ["record_id", "margin"], "record_key": "record_id",
+                    "constraints": [{"field": "team", "op": "==", "value": "security"},
+                                    {"field": "status", "op": "==", "value": "active"}]}
+    },
+
+    {
+      "id": "E-1", "tier": "E", "max_steps": 12,
+      "prompt": "Find all records in team platform with status active whose cost is at most half their budget and whose budget is at least 90. Among those, submit the one with the highest budget: id and its cost, using submit_decision with exactly: {\"record_id\": \"<id>\", \"cost\": <cost>}",
+      "gold": {"record_id": "r1", "cost": 45},
+      "required_tools": ["search_records", "compute_value", "submit_decision"],
+      "validator": {"required": ["record_id", "cost"], "record_key": "record_id",
+                    "constraints": [{"field": "team", "op": "==", "value": "platform"},
+                                    {"field": "status", "op": "==", "value": "active"},
+                                    {"field": "budget", "op": ">=", "value": 90}]}
+    },
+    {
+      "id": "E-2", "tier": "E", "max_steps": 12,
+      "prompt": "Find all records in team security with status active and budget at least 180. Among those, submit the one with the lowest cost: id and its cost, using submit_decision with exactly: {\"record_id\": \"<id>\", \"cost\": <cost>}",
+      "gold": {"record_id": "r8", "cost": 150},
+      "required_tools": ["search_records", "submit_decision"],
+      "validator": {"required": ["record_id", "cost"], "record_key": "record_id",
+                    "constraints": [{"field": "team", "op": "==", "value": "security"},
+                                    {"field": "status", "op": "==", "value": "active"},
+                                    {"field": "budget", "op": ">=", "value": 180}]}
+    },
+    {
+      "id": "E-3", "tier": "E", "max_steps": 12,
+      "prompt": "Find all records in team data with status active and cost below 70. Submit the one with the highest cost: id and its cost, using submit_decision with exactly: {\"record_id\": \"<id>\", \"cost\": <cost>}",
+      "gold": {"record_id": "r5", "cost": 55},
+      "required_tools": ["search_records", "submit_decision"],
+      "validator": {"required": ["record_id", "cost"], "record_key": "record_id",
+                    "constraints": [{"field": "team", "op": "==", "value": "data"},
+                                    {"field": "status", "op": "==", "value": "active"},
+                                    {"field": "cost", "op": "<", "value": 70}]}
+    },
+    {
+      "id": "E-4", "tier": "E", "max_steps": 12,
+      "prompt": "Find all records in region eu with status active, budget at least 100 and cost at most 200. Among those, submit the one with the highest budget: id and its budget, using submit_decision with exactly: {\"record_id\": \"<id>\", \"budget\": <budget>}",
+      "gold": {"record_id": "r1", "budget": 120},
+      "required_tools": ["search_records", "submit_decision"],
+      "validator": {"required": ["record_id", "budget"], "record_key": "record_id",
+                    "constraints": [{"field": "region", "op": "==", "value": "eu"},
+                                    {"field": "status", "op": "==", "value": "active"},
+                                    {"field": "budget", "op": ">=", "value": 100},
+                                    {"field": "cost", "op": "<=", "value": 200}]}
+    },
+    {
+      "id": "E-5", "tier": "E", "max_steps": 12,
+      "prompt": "Find all records in team ops with status active. Submit the one with the highest budget: id and its cost, using submit_decision with exactly: {\"record_id\": \"<id>\", \"cost\": <cost>}",
+      "gold": {"record_id": "r10", "cost": 65},
+      "required_tools": ["search_records", "submit_decision"],
+      "validator": {"required": ["record_id", "cost"], "record_key": "record_id",
+                    "constraints": [{"field": "team", "op": "==", "value": "ops"},
+                                    {"field": "status", "op": "==", "value": "active"}]}
+    }
+  ]
+}

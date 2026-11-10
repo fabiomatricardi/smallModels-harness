@@ -1,0 +1,17 @@
+# llama.cpp binaries and the GGUF model are not published (too large for a plain git repo).
+# Reproduce by downloading them separately; see README.
+llamaCPP/
+
+# model weights, wherever they sit
+*.gguf
+*.ggml
+
+# python
+__pycache__/
+*.pyc
+
+# local run artifacts
+bench/server.log
+bench/server.log.err
+bench/server.pid
+bench/smoke*.jsonl
