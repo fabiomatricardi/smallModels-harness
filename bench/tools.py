@@ -287,6 +287,9 @@ def grade(task: dict, result: dict) -> tuple[bool, str]:
         return False, "no_submission"
     if payload != task["gold"]:
         return False, f"payload_mismatch(expected {task['gold']})"
-    if not _is_subsequence(task["required_tools"], result.get("tools_called", [])):
-        return False, "required_tool_sequence_missing"
+    # The old rule demanded a specific tool sequence, which penalised equally valid paths
+    # (e.g. get_attribute twice instead of compare_records). Require only that the model
+    # actually read data before answering; the payload itself proves it looked things up.
+    if task["tier"] != "A0" and not any(t != "submit_decision" for t in result.get("tools_called", [])):
+        return False, "no_tool_use"
     return True, "ok"

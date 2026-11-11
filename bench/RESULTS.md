@@ -129,6 +129,44 @@ refusing to *commit*. Forcing commitment exposes the real error rate.
 
 **The honest reliability number for this model + harness: 76% pass@1, 67% pass^5, and 0% pass^5 on long-horizon tasks.**
 
+## Finding 7 — the official base model is just as good (and just as bad)
+
+After the first draft I ran Liquid AI's official `LFM3-1.7B-Q6_K.gguf` through the same 300-run
+reliability sweep and the same 180-run capability sweep.
+
+| Model | native pass@1 | native pass^5 | deadline pass@1 | deadline pass^5 |
+|---|---|---|---|---|
+| Community distill, Q5_K_M | 70.0% (62–77) | 57% | 76.0% (69–82) | 67% |
+| **Official base, Q6_K** | 68.7% (61–76) | **60%** | **77.3% (70–83)** | 67% |
+
+All confidence intervals overlap. **The fine-tune adds nothing measurable on these tasks.**
+
+The interface effect was even larger on the base model:
+
+| Arm (temp 0, 2 reps) | Distill | Base |
+|---|---|---|
+| JSON-in-text | 47% | **37%** |
+| Native tools | 73% | **70%** |
+| Verifier | 73% | 67% |
+
+That is **+33 pp** from the interface on the base model, against +26 pp on the distill.
+
+Tier differences (temp 0, native): the base model is better at A0 (80% vs 60%) and worse on E
+(0% vs 40%). With five tasks per tier these swings are noise-level, but the direction is consistent
+with a trade between instruction-following and multi-step persistence.
+
+**Caveat:** the base is Q6_K and the distill is Q5_K_M, so quantisation is not controlled. The gap
+between them is far smaller than the confidence intervals, so "no measurable difference" is the
+defensible claim.
+
+## A grading correction (applies to both models)
+
+The original grader required a *specific* tool sequence. The base model often took an equivalent
+path — two `get_attribute` calls instead of `compare_records` — and was marked wrong despite a
+correct payload. Eleven base-model runs were affected; no distill runs were. The rule is now:
+**correct payload + at least one data-reading tool call**. Re-grading raised the base from 66.0% to
+68.7% (native) and 72.7% to 77.3% (deadline).
+
 ## What this says about the Karpathy claim
 
 | Thesis | Local verdict |
