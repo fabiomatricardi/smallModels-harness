@@ -14,12 +14,13 @@ param(
     [string]$Ctk = "q8_0",
     [string]$Ctv = "q8_0",
     [int]$ReasoningBudget = 0,
-    [string]$Fa = "on"
+    [string]$Fa = "on",
+    [string]$ModelFile = "LFM-3-Coder-Claude-Distill.Q5_K_M.gguf"
 )
 
 $root = Split-Path -Parent $PSScriptRoot
 $exe = Join-Path $root "llamaCPP\llama-server.exe"
-$model = Join-Path $root "llamaCPP\models\LFM-3-Coder-Claude-Distill.Q5_K_M.gguf"
+$model = Join-Path $root "llamaCPP\models\$ModelFile"
 $log = Join-Path $PSScriptRoot "server.log"
 
 if (-not (Test-Path $exe)) { throw "llama-server.exe not found at $exe" }

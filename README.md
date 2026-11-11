@@ -47,7 +47,8 @@ C:\myAI\20261110.SML-agents\
 │
 ├─ research\
 │  ├─ SOURCES.md                 annotated evidence: for/against, links, exact numbers
-│  └─ VERDICT.md                 thesis-by-thesis verdict + local replication summary
+│  ├─ VERDICT.md                 thesis-by-thesis verdict + local replication summary
+│  └─ HARNESSES-AND-STRUCTURED-OUTPUT.md   what OpenCode/Pi/etc. expect from a model
 │
 ├─ bench\
 │  ├─ README.md                  how the benchmark works, arms, usage
